@@ -1,7 +1,10 @@
 # Blackjack
 A front end browser based game to challenge me and enhance my skills with JS CSS HTML
 
-## Gameplay - Screenshots
+## Gameplay - Wireframes
+
+![Blackjack wireframe](https://github.com/humayuntariq98/Blackjack/assets/138518548/3b87109e-9ddb-4250-bfef-b745ebff3916)
+
 
 ## Technologies Used
 
