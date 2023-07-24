@@ -3,7 +3,8 @@ A front end browser based game to challenge me and enhance my skills with JS CSS
 
 ## Gameplay - Wireframes
 
-![Blackjack wireframe](https://github.com/humayuntariq98/Blackjack/assets/138518548/3b87109e-9ddb-4250-bfef-b745ebff3916)
+![Blackjack Wireframe](https://github.com/humayuntariq98/Blackjack/assets/138518548/9002370f-7cba-40fb-a618-345b4a682622)
+
 
 
 ## Technologies Used
