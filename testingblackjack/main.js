@@ -1,3 +1,4 @@
+
 let INIT_STATE = {
     p: 0,
     d: 0,
@@ -102,15 +103,17 @@ render();
 // calculateScore();
 }
 
-function calculateScore(){
-    if(state.d > 21) {
-        console.log('dealer wins')
-    } else if (state.p){
-
-    }
+function calculateDealerScore(){
+    // if(state.d === 21 && state.p === 21) {
+    //     console.log('Push')
+    // } else if (state.d === 21 || state.p > 21 ){
+    //     console.log("dealer wins")
+    // } else if (state.p === 21 || state.d > 21) {
+    //     console.log("player wins")
+    // } else if (state.d < 21 && state.p < 21) {
  //calculating dealer score
- let dTotal = state.d;
- state.dealerCards.forEach((dCard)=>{
+    let dTotal = state.d;
+    state.dealerCards.forEach((dCard)=>{
      if (dCard.face === "A"){
          if(dTotal>10){
              dCard.value = 1
@@ -122,8 +125,11 @@ function calculateScore(){
  })
  state.d = dTotal
  console.log(state.d)
+ render();
+ determineWinner();
+}
 
- //calculating player score
+ function calculatePlayerScore(){
 
  let pTotal = state.p;
  state.playerCards.forEach((pCard)=>{
@@ -139,17 +145,22 @@ function calculateScore(){
  state.p = pTotal
  console.log(state.p)
 
-if (state.d > 21 || state.p > 21){
-    console.log("Game over")
-} else if (state.d === 21 ){
-    console.log("dealer wins")
-} else if (state.p === 21) {
-    console.log ("player wins")
-} else if (state.d === 21 && state.p === 21) {
-    console.log("its a tie")
+ render();
+ determineWinner();
 }
 
-render();
+function determineWinner(){
+    if (state.p === 21 && state.d === 21 ) {
+        console.log("Push")
+    } else if (state.p === 21 && state.d !== 21) {
+        console.log("player wins")
+    } else if (state.d === 21 && state.p !== 21) {
+        console.log("dealer wins")
+    } else if (state.p > 21) {
+        console.log("dealer wins")
+    } else if (state.d > 21) {
+        console.log("player wins")
+    }
 }
 
 function render(){
@@ -199,13 +210,17 @@ state.dealerCards.push(dealerCard1)
 state.dealerCards.push(dealerCard2)
 
 console.log(dealerCard1);
-calculateScore();
+calculateDealerScore();
+calculatePlayerScore();
 render();
 
 }
 }
 
 function handleHitClick(){
+    if(state.p >21){
+        btnHit.removeEventListener("click", handleHitClick)
+    } else {
 let newPlyerCard = randomCardGenerate()
 const newPlayerDiv = document.createElement("div")
 const newSpan = document.createElement("span")
@@ -214,7 +229,17 @@ newPlayerDiv.appendChild(newSpan);
 const playerDivs = document.querySelector(".player-cards")
 playerDivs.appendChild(newPlayerDiv);
 state.playerCards.push(newPlyerCard);
-
-//updating player score and rendering it on the screen
-// hit condition
+//updating player score after hit
+if (newPlyerCard.face === "A"){
+    if(state.p>10){
+        newPlyerCard.value = 1
+    } else {
+        pCard.value = 11
+    }
+}
+state.p += newPlyerCard.value
+//rendering player score on the screen after hit
+pScoreEl.innerText = state.p;
+determineWinner();
+}
 }
