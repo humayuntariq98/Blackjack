@@ -22,6 +22,14 @@ Humayun Tariq Mughal
 5. Adding event listeners to the cached elements.
 
 6. Defining the winning logic (if total > 21) etc.
+-----
+1. Defining state variables
+- Create an array of objects for deck of cards.
+- Object of scores to hold p and d scores
+- Winner -> P, D, T
+
+2. 
+
 
 
  
