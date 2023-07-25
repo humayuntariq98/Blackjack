@@ -1,4 +1,8 @@
-
+// randomCardGenerate function to exclude cards from the deck
+//Value of A
+//IN HIT FUNCTION, IF P SCORE > 21 STOP GAME
+//IN DEAL FUNCTION IF CLICKED ONCE CANNOT BE CLICKED AGAIN
+//direct blackjack, then whatever happens
 //player sum calculate and player sum function
 // state variables (suits, faces, deck,scores,winner)
 
