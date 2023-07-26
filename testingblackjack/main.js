@@ -77,8 +77,10 @@ let winner;
 
 // Event Listeners
 const btnHit = document.getElementById("hitBtn")
+btnHit.disabled = true;
 const btnDeal = document.getElementById("dealBtn")
 const btnStand = document.getElementById("standBtn")
+btnStand.disabled = true;
 
 const dealerCard1Text = document.getElementById('dealer-card1-Text')
 const dealerCard2Text = document.getElementById('dealer-card2-Text')
@@ -92,13 +94,14 @@ console.log(btnDeal);
 
 btnHit.addEventListener("click", handleHitClick);
 btnDeal.addEventListener("click", handleDealClick);
-// btnStand.addEventListener("click", handleStandClick);
+btnStand.addEventListener("click", handleStandClick);
 
 //Functions Section
 
 init();
 function init(){
 state = {...INIT_STATE};
+winner = null;
 render();
 // calculateScore();
 }
@@ -112,21 +115,28 @@ function calculateDealerScore(){
     //     console.log("player wins")
     // } else if (state.d < 21 && state.p < 21) {
  //calculating dealer score
-    let dTotal = state.d;
-    state.dealerCards.forEach((dCard)=>{
-     if (dCard.face === "A"){
-         if(dTotal>10){
-             dCard.value = 1
-         } else {
-             dCard.value = 11
-         }
-     }
-     dTotal = dTotal + dCard.value
- })
- state.d = dTotal
- console.log(state.d)
- render();
- determineWinner();
+
+//     let dTotal = state.d;
+//     state.dealerCards.forEach((dCard)=>{
+//      if (dCard.face === "A"){
+//          if(dTotal>10){
+//              dCard.value = 1
+//          } else {
+//              dCard.value = 11
+//          }
+//      }
+//      dTotal = dTotal + dCard.value
+//  })
+
+    let dTotal = state.d
+        if (state.dealerCards[0].face === "A") {
+            state.dealerCards[0].value = 11
+        }
+        dTotal = dTotal + state.dealerCards[0].value
+        state.d = dTotal
+        console.log(state.d)
+        render();
+        determineWinner();
 }
 
  function calculatePlayerScore(){
@@ -152,14 +162,19 @@ function calculateDealerScore(){
 function determineWinner(){
     if (state.p === 21 && state.d === 21 ) {
         console.log("Push")
-    } else if (state.p === 21 && state.d !== 21) {
-        console.log("player wins")
+        winner = "Push, it's a Tie"
+    // } else if (state.p === 21 && state.d !== 21) {
+    //     console.log("player wins")
+    //     winner = "Player wins"
     } else if (state.d === 21 && state.p !== 21) {
         console.log("dealer wins")
+        winner = "Dealer wins"
     } else if (state.p > 21) {
         console.log("dealer wins")
+        winner = "Dealer wins"
     } else if (state.d > 21) {
         console.log("player wins")
+        winner = "Player wins"
     }
 }
 
@@ -168,6 +183,7 @@ function render(){
 if (state.dealerCards.length > 0) {
     dealerCard1Text.innerText = `${state.dealerCards[0].face}`;
     dealerCard2Text.innerText = `${state.dealerCards[1].face}`;
+    dealerCard2Text.classList.add("hidden")
 } else {
     dealerCard1Text.innerText = "Click Deal to begin";
 }
@@ -208,7 +224,8 @@ state.playerCards.push(playerCard1)
 state.playerCards.push(playerCard2)
 state.dealerCards.push(dealerCard1)
 state.dealerCards.push(dealerCard2)
-
+btnHit.disabled = false;
+btnStand.disabled = false;
 console.log(dealerCard1);
 calculateDealerScore();
 calculatePlayerScore();
@@ -218,7 +235,7 @@ render();
 }
 
 function handleHitClick(){
-    if(state.p >21){
+    if(state.p >=21){
         btnHit.removeEventListener("click", handleHitClick)
     } else {
 let newPlyerCard = randomCardGenerate()
@@ -243,3 +260,42 @@ pScoreEl.innerText = state.p;
 determineWinner();
 }
 }
+
+//coding stand
+//once state.p >= 21 disable the button or remove event listener
+function handleStandClick () {
+    btnStand.removeEventListener("click", handleStandClick)
+    if (winner === null) {
+        btnHit.disabled = true;
+        console.log("Stand clicked")
+        dealerCard2Text.classList.remove("hidden")
+        let d2Total = state.d;
+        if (state.dealerCards[1].face === "A") {
+            if(d2Total>10){
+             state.dealerCards[1].value = 1
+         } else {
+             state.dealerCards[1].value = 11
+         }
+     }
+        d2Total = d2Total + state.dealerCards[1].value
+        state.d = d2Total
+        dScoreEl.innerText = state.d
+
+    //create new cards with loop
+        
+    // and score calculate again using for loop for the remnaining cards
+    //render score on the screen
+    //winning comparison again
+    } else {
+        
+    }
+}
+// stand will disable the hit button as well DONE
+
+// if the score is less than equal to 16, add another card to dealer, render it, and update the score
+// if the score is still the same repeat, 
+//if the score is greater than 16 and less than 21, determine winner function runs WHICH COMPARES THE SCORE (CHECK IT)
+// if dealer score is equal to 21, dealer wins
+//if dealer score is greater than 21 player wins
+//can use while loop like while (state.d <= 16 add new card)
+//once the player clicks stand
