@@ -1,3 +1,5 @@
+
+//GLOBAL
 let INIT_STATE = {
   p: 0,
   d: 0,
@@ -10,7 +12,8 @@ let INIT_STATE = {
 //wagering
 //audio
 //some sort of timer
-// state variables (suits, faces, deck,scores,winner)
+
+//STATE VARIABLES
 
 let suits = ["clubs", "diamonds", "hearts", "spades"];
 let faces = [
@@ -43,7 +46,9 @@ let state;
 
 let winner;
 
-// Event Listeners
+let numberGenerator;
+
+// CACHED ELEMENTS
 const btnHit = document.getElementById("hitBtn");
 btnHit.disabled = true;
 const btnDeal = document.getElementById("dealBtn");
@@ -61,18 +66,20 @@ const winnerEl = document.getElementById("winnerText");
 
 console.log(btnDeal);
 
+//EVENT LISTENERS
+
 btnHit.addEventListener("click", handleHitClick);
 btnDeal.addEventListener("click", handleDealClick);
 btnStand.addEventListener("click", handleStandClick);
 
-//Functions Section
+//FUNCTIONS
 
 init();
 function init() {
   state = { ...INIT_STATE };
   winner = null;
+  numberGenerator = 52;
   render();
-  // calculateScore();
 }
 
 function calculateDealerScore() {
@@ -147,9 +154,10 @@ function render() {
 
 function randomCardGenerate() {
   let output;
-  const cardNumber = Math.floor(Math.random() * 52);
+  const cardNumber = Math.floor(Math.random() * numberGenerator);
   output = deck[cardNumber];
-  deck.splice(cardNumber,1)
+  deck.splice(cardNumber, 1);
+  numberGenerator = numberGenerator - 1;
   return output;
 }
 
@@ -215,8 +223,6 @@ function handleStandClick() {
     d2Total = d2Total + state.dealerCards[1].value;
     state.d = d2Total;
     dScoreEl.innerText = state.d;
-
-    //create new cards with loop
     while (state.d <= 16) {
       let newDealerCard = randomCardGenerate();
       if (newDealerCard.face === "A") {
@@ -239,13 +245,13 @@ function handleStandClick() {
     }
     if (state.p === 21 && state.d === 21) {
       console.log("push");
-      winner = "push. It's a tie";
+      winner = "Push. It's a tie";
     } else if (state.p === 21 && state.d !== 21) {
       console.log("player wins");
-      winner = "player wins";
+      winner = "Player wins";
     } else if (state.d === 21 && state.p !== 21) {
       console.log("dealer wins");
-      winner = "dealer wins";
+      winner = "Dealer wins";
     } else if (state.d > 21) {
       console.log("player wins");
       winner = "Player wins";
@@ -256,15 +262,16 @@ function handleStandClick() {
       console.log("Dealer wins");
       winner = "Dealer wins";
     } else if (state.d === state.p) {
-    console.log("Push. It's a tie");
-    winner = "Push. It's a tie";}
+      console.log("Push. It's a tie");
+      winner = "Push. It's a tie";
+    }
   }
   renderWinner();
 }
 
-
-//CARD ICONS, RESET AND OTHER THING MENTIONED AT TOP TO DO
 function renderWinner() {
   winnerEl.innerText = winner;
 }
+
+
 
