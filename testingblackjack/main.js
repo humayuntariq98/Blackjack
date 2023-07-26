@@ -261,8 +261,7 @@ determineWinner();
 }
 }
 
-//coding stand
-//once state.p >= 21 disable the button or remove event listener
+
 function handleStandClick () {
     btnStand.removeEventListener("click", handleStandClick)
     if (winner === null) {
@@ -282,20 +281,56 @@ function handleStandClick () {
         dScoreEl.innerText = state.d
 
     //create new cards with loop
-        
-    // and score calculate again using for loop for the remnaining cards
-    //render score on the screen
-    //winning comparison again
-    } else {
-        
-    }
-}
-// stand will disable the hit button as well DONE
+    while (state.d <=16) {
+        let newDealerCard = randomCardGenerate();
+        if (newDealerCard.face === "A") { 
+            if (state.d >10) {
+                newDealerCard.value = 1
+            } else {
+                newDealerCard.value = 11
+            }
+        }
+        state.d = state.d + newDealerCard.value
+        dScoreEl.innerText = state.d
+        state.dealerCards.push(newDealerCard)
+        let newDealerCardEl = document.createElement("div")
+        newDealerCardEl.innerText = newDealerCard.face;
+        let dealerDivEl = document.querySelector(".dealer-cards")
+        dealerDivEl.appendChild(newDealerCardEl);
+        if (state.d >=17) {
+            break;
+        }
 
-// if the score is less than equal to 16, add another card to dealer, render it, and update the score
-// if the score is still the same repeat, 
-//if the score is greater than 16 and less than 21, determine winner function runs WHICH COMPARES THE SCORE (CHECK IT)
-// if dealer score is equal to 21, dealer wins
-//if dealer score is greater than 21 player wins
-//can use while loop like while (state.d <= 16 add new card)
-//once the player clicks stand
+    }
+        if (state.p === 21 && state.d ===21) {
+            console.log("push")
+            winner = "push. It's a tie"
+        } else if(state.p === 21 && state.d !==21 ){
+            console.log("player wins")
+            winner = "player wins"
+        } else if (state.d === 21 && state.p !== 21){
+            console.log("dealer wins")
+            winner = "dealer wins"
+        } else if (state.d > 21) {
+            console.log("player wins")
+            winner = "Player wins"
+        } else if (state.p > state.d) {
+            console.log("Player wins")
+            winner = "Player wins"
+        } else if (state.d > state.p) {
+            console.log("Dealer wins")
+            winner = "Dealer wins"
+        }
+    } 
+    renderWinner()
+}
+
+function renderWinner(){
+    
+}
+
+
+
+
+
+
