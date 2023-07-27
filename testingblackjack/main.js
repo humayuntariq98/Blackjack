@@ -1,10 +1,14 @@
-
+//THINGS TO RESOLVE
+//HOW TO MAKE COPY OF STATE IN INIT
+//NAN PROBLEM AFTER RESET
+//HOW TO CLEAR THE CARDS FROM THE PAGE
+//HOW TO GET THE CARDS TO SHOW AGAIN 
 //GLOBAL
-let INIT_STATE = {
+const INIT_STATE = {
   p: 0,
   d: 0,
   playerCards: [],
-  dealerCards: [],
+  dealerCards: []
 };
 
 //reset button
@@ -48,13 +52,19 @@ let winner;
 
 let numberGenerator;
 
+let usedCards = [];
+
 // CACHED ELEMENTS
 const btnHit = document.getElementById("hitBtn");
 btnHit.disabled = true;
 const btnDeal = document.getElementById("dealBtn");
 const btnStand = document.getElementById("standBtn");
 btnStand.disabled = true;
+const resetBtn = document.getElementById("resetBtn")
+resetBtn.disabled = true;
 
+const playerDivs = document.querySelector(".player-cards");
+const dealerDivs = document.querySelector(".dealer-cards")
 const dealerCard1Text = document.getElementById("dealer-card1-Text");
 const dealerCard2Text = document.getElementById("dealer-card2-Text");
 const playerCard1Text = document.getElementById("player-card1-Text");
@@ -71,12 +81,21 @@ console.log(btnDeal);
 btnHit.addEventListener("click", handleHitClick);
 btnDeal.addEventListener("click", handleDealClick);
 btnStand.addEventListener("click", handleStandClick);
+// resetBtn.addEventListener("click", handleResetClick);
 
 //FUNCTIONS
 
 init();
 function init() {
-  state = { ...INIT_STATE };
+  // state = {...INIT_STATE}
+  state = JSON.parse(JSON.stringify(INIT_STATE));
+  // state = {
+  //   p: 0,
+  //   d: 0,
+  //   playerCards: [],
+  //   dealerCards: []
+  // };
+
   winner = null;
   numberGenerator = 52;
   render();
@@ -156,7 +175,7 @@ function randomCardGenerate() {
   let output;
   const cardNumber = Math.floor(Math.random() * numberGenerator);
   output = deck[cardNumber];
-  deck.splice(cardNumber, 1);
+  usedCards.push(deck.splice(cardNumber, 1));
   numberGenerator = numberGenerator - 1;
   return output;
 }
@@ -207,7 +226,8 @@ function handleHitClick() {
 }
 
 function handleStandClick() {
-  btnStand.removeEventListener("click", handleStandClick);
+  // btnStand.removeEventListener("click", handleStandClick);
+  btnStand.disabled = true;
   if (winner === null) {
     btnHit.disabled = true;
     console.log("Stand clicked");
@@ -271,7 +291,92 @@ function handleStandClick() {
 
 function renderWinner() {
   winnerEl.innerText = winner;
+  if (winner !== null){
+    resetBtn.disabled = false;
+    btnStand.disabled = true;
+  }
 }
 
 
+// //coding the reset button
+// function handleResetClick() {
+//   //can disable it again after it has been clicked so that it gets enabled once the winner is assigned again
+//   resetBtn.disabled = true;
+//   //make the screen the way it was when the page loaded
+//   // state = {
+//   //   p: 0,
+//   //   d: 0,
+//   //   playerCards: [],
+//   //   dealerCards: []
+//   // }
+//   // winner = null;
+//   // numberGenerator = 52;
+//   console.log("reset clicked")
+//   usedCards.forEach((usedCard)=>{
+//     deck.push(usedCard);
+//   })
+//   usedCards = [];
+//   //open again hit, deal, stand, get scores back to 0 on screen,
+//   btnDeal.disabled = false;
+//   btnHit.disabled = false;
+//   btnStand.disabled = false;
+//   init();
+//   // render();
+//   // dealerCard1Text.innerText = ""
+//   // dealerCard2Text.innerText = ""
+//   // playerCard1Text.innerText = ""
+//   // playerCard2Text.innerText = ""
+//   dealerDivs.innerText = "";
+//   playerDivs.innerText = "";
+  
+//   //we dont need to call render here. we need to manually make sure that every child of player card div and dealer card div hides after reset and also update the score manually on the screen
+//   //current issue: after reset is clicked, playercards and dealercards are still being shown on the screen and are still present inside the state object even tho it should not have any player or dealer cards.
+//   //last few features added : btnStand.disabled = true;
+//   //state variable hard coded to 0 in reset click
+// }
+
+// function resetCardElements() {
+//   dealerCard1Text.innerText = "";
+//   dealerCard2Text.innerText = "";
+//   playerCard1Text.innerText = "";
+//   playerCard2Text.innerText = "";
+// }
+
+// // Reset the player and dealer card arrays in the state
+// function resetCardArrays() {
+//   state.playerCards = [];
+//   state.dealerCards = [];
+// }
+
+// // Reset the player and dealer scores in the state
+// function resetScores() {
+//   state.p = 0;
+//   state.d = 0;
+// }
+
+// // Helper function to enable/disable buttons
+// function setButtonDisabled(disabled) {
+//   btnDeal.disabled = disabled;
+//   btnHit.disabled = disabled;
+//   btnStand.disabled = disabled;
+// }
+
+// // //coding the reset button
+// function handleResetClick() {
+//   resetBtn.disabled = true;
+//   console.log("reset clicked");
+
+//   // Put all used cards back to the deck
+//   deck.push(...usedCards);
+//   usedCards = [];
+
+//   // Reset card elements, card arrays, and scores
+//   resetCardElements();
+//   resetCardArrays();
+//   resetScores();
+
+//   // Enable buttons and render the initial state
+//   setButtonDisabled(false);
+//   render();
+// }
 
