@@ -1,66 +1,89 @@
 *{
-    box-sizing: border-box;
-    border: 1px solid red;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  border: 1px solid red;
+  margin: 0;
+  padding: 0;
 }
 html, body {
-    height: 100%;
-  }
-  
+  height: 100%;
+}
 nav{
-    display: flex;
-    justify-content: space-evenly;
-    height: 50px;
-    background-color: rgb(119, 153, 144);
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  background-color: rgb(119, 153, 144);
+  align-items: center;
 }
 nav>div:first-child{
-    margin-left: 50%;
+  margin-left: 48%;
 }
-nav>div:last-child{
-    margin-left: auto
+#top-Menu{
+  margin-left: auto
 }
 main.container {
-    display: grid;
-    min-height: 100%;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 2fr 2fr;
-    gap: 10px;
-    align-items: center;
-    justify-items: center;
+  display: grid;
+  min-height: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2fr 2fr 2fr;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
 }
+
+div.dealer-cards,
+div.player-cards {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+div.dealer-card,
+div.player-card {
+width: 60px; /* Adjust the width as needed */
+height: 80px; /* Adjust the height as needed */
+border: 1px solid black;
+margin: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
 button.hit {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-  }
-  
-  div.dealer-cards {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-  }
-  
-  button.deal {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-  }
-  
-  div.player-cards {
-    grid-column: 2 / 3;
-    grid-row: 3 / 4;
-  }
-  
-  div.d-score {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-  }
-  
-  button.stand {
-    grid-column: 3 / 4;
-    grid-row: 2 / 3;
-  }
-  
-  div.p-score {
-    grid-column: 3 / 4;
-    grid-row: 3 / 4;
-  }
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+div.dealer-cards {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+button.deal {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+div.player-cards {
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+}
+
+div.d-score {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+}
+
+button.stand {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+div.p-score {
+  grid-column: 3 / 4;
+  grid-row: 3 / 4;
+}
+
+.hidden {
+  display: none
+}
