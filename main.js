@@ -81,21 +81,23 @@ const INIT_STATE = {
   btnHit.addEventListener("click", handleHitClick);
   btnDeal.addEventListener("click", handleDealClick);
   btnStand.addEventListener("click", handleStandClick);
-  // resetBtn.addEventListener("click", handleResetClick);
+  resetBtn.addEventListener("click", handleResetClick);
   
   //FUNCTIONS
   
   init();
   function init() {
+    // console.log(resetBtn.disabled)
     // state = {...INIT_STATE}
-    state = JSON.parse(JSON.stringify(INIT_STATE));
-    // state = {
-    //   p: 0,
-    //   d: 0,
-    //   playerCards: [],
-    //   dealerCards: []
-    // };
-  
+    // console.log(state)
+    // state = JSON.parse(JSON.stringify(INIT_STATE));
+    state = {
+      p: 0,
+      d: 0,
+      playerCards: [],
+      dealerCards: []
+    };
+    console.log(playerCard2Text.innerHTML)
     winner = null;
     numberGenerator = 52;
     render();
@@ -108,7 +110,7 @@ const INIT_STATE = {
     }
     dTotal = dTotal + state.dealerCards[0].value;
     state.d = dTotal;
-    console.log(state.d);
+    // console.log(state.d);
     render();
     determineWinner();
   }
@@ -134,16 +136,16 @@ const INIT_STATE = {
   
   function determineWinner() {
     if (state.p === 21 && state.d === 21) {
-      console.log("Push");
+      // console.log("Push");
       winner = "Push, it's a Tie";
     } else if (state.d === 21 && state.p !== 21) {
-      console.log("dealer wins");
+      // console.log("dealer wins");
       winner = "Dealer wins";
     } else if (state.p > 21) {
-      console.log("dealer wins");
+      // console.log("dealer wins");
       winner = "Dealer wins";
     } else if (state.d > 21) {
-      console.log("player wins");
+      // console.log("player wins");
       winner = "Player wins";
     }
     renderWinner();
@@ -223,6 +225,7 @@ const INIT_STATE = {
       pScoreEl.innerText = state.p;
       determineWinner();
     }
+    console.log(playerCard2Text.innerHTML)
   }
   
   function handleStandClick() {
@@ -230,7 +233,7 @@ const INIT_STATE = {
     btnStand.disabled = true;
     if (winner === null) {
       btnHit.disabled = true;
-      console.log("Stand clicked");
+      // console.log("Stand clicked");
       dealerCard2Text.classList.remove("hidden");
       let d2Total = state.d;
       if (state.dealerCards[1].face === "A") {
@@ -264,25 +267,25 @@ const INIT_STATE = {
         }
       }
       if (state.p === 21 && state.d === 21) {
-        console.log("push");
+        // console.log("push");
         winner = "Push. It's a tie";
       } else if (state.p === 21 && state.d !== 21) {
-        console.log("player wins");
+        // console.log("player wins");
         winner = "Player wins";
       } else if (state.d === 21 && state.p !== 21) {
-        console.log("dealer wins");
+        // console.log("dealer wins");
         winner = "Dealer wins";
       } else if (state.d > 21) {
-        console.log("player wins");
+        // console.log("player wins");
         winner = "Player wins";
       } else if (state.p > state.d && state.p < 21) {
-        console.log("Player wins");
+        // console.log("Player wins");
         winner = "Player wins";
       } else if (state.d > state.p && state.d < 21) {
-        console.log("Dealer wins");
+        // console.log("Dealer wins");
         winner = "Dealer wins";
       } else if (state.d === state.p) {
-        console.log("Push. It's a tie");
+        // console.log("Push. It's a tie");
         winner = "Push. It's a tie";
       }
     }
@@ -294,40 +297,41 @@ const INIT_STATE = {
     if (winner !== null){
       resetBtn.disabled = false;
       btnStand.disabled = true;
+      // console.log(resetBtn.disabled)
     }
   }
   
   
-  // //coding the reset button
-  // function handleResetClick() {
-  //   //can disable it again after it has been clicked so that it gets enabled once the winner is assigned again
-  //   resetBtn.disabled = true;
-  //   //make the screen the way it was when the page loaded
-  //   // state = {
-  //   //   p: 0,
-  //   //   d: 0,
-  //   //   playerCards: [],
-  //   //   dealerCards: []
-  //   // }
-  //   // winner = null;
-  //   // numberGenerator = 52;
-  //   console.log("reset clicked")
-  //   usedCards.forEach((usedCard)=>{
-  //     deck.push(usedCard);
-  //   })
-  //   usedCards = [];
-  //   //open again hit, deal, stand, get scores back to 0 on screen,
-  //   btnDeal.disabled = false;
-  //   btnHit.disabled = false;
-  //   btnStand.disabled = false;
-  //   init();
-  //   // render();
-  //   // dealerCard1Text.innerText = ""
-  //   // dealerCard2Text.innerText = ""
-  //   // playerCard1Text.innerText = ""
-  //   // playerCard2Text.innerText = ""
-  //   dealerDivs.innerText = "";
-  //   playerDivs.innerText = "";
+  //coding the reset button
+  function handleResetClick() {
+    //can disable it again after it has been clicked so that it gets enabled once the winner is assigned again
+    resetBtn.disabled = true;
+    //make the screen the way it was when the page loaded
+    // state = {
+    //   p: 0,
+    //   d: 0,
+    //   playerCards: [],
+    //   dealerCards: []
+    // }
+    // winner = null;
+    // numberGenerator = 52;
+    usedCards.forEach((usedCard)=>{
+      deck.push(usedCard);
+    })
+    usedCards = [];
+    //open again hit, deal, stand, get scores back to 0 on screen,
+    btnDeal.disabled = false;
+    btnHit.disabled = false;
+    btnStand.disabled = false;
+    init();
+    // render();
+  }
+    dealerCard1Text.innerText = ""
+    dealerCard2Text.innerText = ""
+    playerCard1Text.innerText = ""
+    playerCard2Text.innerText = ""
+    // dealerDivs.innerText = "";
+    // playerDivs.innerText = "";
     
   //   //we dont need to call render here. we need to manually make sure that every child of player card div and dealer card div hides after reset and also update the score manually on the screen
   //   //current issue: after reset is clicked, playercards and dealercards are still being shown on the screen and are still present inside the state object even tho it should not have any player or dealer cards.
