@@ -18,7 +18,7 @@ A front end browser based game to challenge me and enhance my skills with JS CSS
 
 ## Getting Started
 
-Try out your luck with this game of chance - [gamelink]()
+Try out your luck with this game of chance - [Game Link](https://github.com/humayuntariq98/Blackjack)
 
 ## Future Features
 

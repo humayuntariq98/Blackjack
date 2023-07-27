@@ -225,7 +225,7 @@ const INIT_STATE = {
       pScoreEl.innerText = state.p;
       determineWinner();
     }
-    console.log(playerCard2Text.innerHTML)
+    console.log(playerCard2Text.textContent)
   }
   
   function handleStandClick() {
@@ -323,13 +323,33 @@ const INIT_STATE = {
     btnDeal.disabled = false;
     btnHit.disabled = false;
     btnStand.disabled = false;
+    
+    let pTotal = state.p;
+    state.playerCards.forEach((pCard) => {
+      if (pCard.face === "A") {
+        if (pTotal > 10) {
+          pCard.value = 1;
+        } else {
+          pCard.value = 11;
+        }
+      }
+      pTotal = pTotal + pCard.value;
+    });
+
+    let dTotal = state.d;
+    if (state.dealerCards[0].face === "A") {
+      state.dealerCards[0].value = 11;
+    }
+    dTotal = dTotal + state.dealerCards[0].value;
+    state.d = dTotal;
+
     init();
     // render();
   }
-    dealerCard1Text.innerText = ""
-    dealerCard2Text.innerText = ""
-    playerCard1Text.innerText = ""
-    playerCard2Text.innerText = ""
+    dealerCard1Text.textContent = ""
+    dealerCard2Text.textContent = ""
+    playerCard1Text.textContent = ""
+    playerCard2Text.textContent = ""
     // dealerDivs.innerText = "";
     // playerDivs.innerText = "";
     
