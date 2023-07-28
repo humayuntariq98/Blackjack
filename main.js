@@ -1,9 +1,3 @@
-//THINGS TO RESOLVE
-//HOW TO MAKE COPY OF STATE IN INIT
-//NAN PROBLEM AFTER RESET
-//HOW TO CLEAR THE CARDS FROM THE PAGE
-//HOW TO GET THE CARDS TO SHOW AGAIN
-//GLOBAL
 const INIT_STATE = {
   p: 0,
   d: 0,
@@ -13,7 +7,7 @@ const INIT_STATE = {
 
 //STATE VARIABLES
 
-let suits = ["clubs", "diamonds", "hearts", "spades"];
+let suits = ["club", "diamond", "heart", "spade"];
 let faces = [
   { face: "A", value: [11, 1] },
   { face: "2", value: 2 },
@@ -63,10 +57,18 @@ const dealerCard1Text = document.getElementById("dealer-card1-Text");
 const dealerCard2Text = document.getElementById("dealer-card2-Text");
 const playerCard1Text = document.getElementById("player-card1-Text");
 const playerCard2Text = document.getElementById("player-card2-Text");
+const dealerCard2Element = document.querySelector(".dealer-card2")
+const playerCard2Element = document.querySelector(".player-card2")
 
 const pScoreEl = document.querySelector(".p-score");
 const dScoreEl = document.querySelector(".d-score");
 const winnerEl = document.getElementById("winnerText");
+
+
+const dealerCard1Icon = document.getElementById("dealer-card1-icon")
+const dealerCard2Icon = document.getElementById("dealer-card2-icon")
+const playerCard1Icon = document.getElementById("player-card1-icon")
+const playerCard2Icon = document.getElementById("player-card2-icon")
 
 console.log(btnDeal);
 
@@ -137,7 +139,11 @@ function render() {
   //render dealer cards on the screen
   if (state.dealerCards.length > 0) {
     dealerCard1Text.innerText = `${state.dealerCards[0].face}`;
+    dealerCard1Text.classList.add("card-text")
+    dealerCard1Text.classList.remove("small-text")
     dealerCard2Text.innerText = `${state.dealerCards[1].face}`;
+    dealerCard2Text.classList.add("card-text")
+    dealerCard2Text.classList.remove("small-text")
     dealerCard2Text.classList.add("hidden");
   } else {
     dealerCard1Text.innerText = "Click Deal to begin";
@@ -146,7 +152,11 @@ function render() {
   // Render player cards
   if (state.playerCards.length > 0) {
     playerCard1Text.innerText = `${state.playerCards[0].face}`;
+    playerCard1Text.classList.add("card-text")
+    playerCard1Text.classList.remove("small-text")
     playerCard2Text.innerText = `${state.playerCards[1].face}`;
+    playerCard2Text.classList.add("card-text")
+    playerCard2Text.classList.remove("small-text")
   } else {
     playerCard1Text.innerText = "Click Deal to begin";
   }
@@ -179,6 +189,11 @@ function handleDealClick(event) {
   calculateDealerScore();
   calculatePlayerScore();
   render();
+  addIconToSpan(dealerCard1Icon, state.dealerCards[0].suit, dealerCard1Text)
+  addIconToSpan(dealerCard2Icon, state.dealerCards[1].suit, dealerCard2Text)
+  playerCard2Element.classList.remove("hidden")
+  addIconToSpan(playerCard1Icon, state.playerCards[0].suit, playerCard1Text);
+  addIconToSpan(playerCard2Icon, state.playerCards[1].suit, playerCard2Text);
 }
 
 function handleHitClick() {
@@ -189,8 +204,12 @@ function handleHitClick() {
     const newPlayerDiv = document.createElement("div");
     newPlayerDiv.classList.add("player-extra-cards","card");
     const newSpan = document.createElement("span");
+    newSpan.classList.add("card-text")
+    const iconSpan = document.createElement("span");
+    addIconToSpan(iconSpan, newPlyerCard.suit, newSpan)
     newSpan.textContent = newPlyerCard.face;
     newPlayerDiv.appendChild(newSpan);
+    newPlayerDiv.appendChild(iconSpan);
     const playerDivs = document.querySelector(".player-cards");
     playerDivs.appendChild(newPlayerDiv);
     state.playerCards.push(newPlyerCard);
@@ -213,7 +232,9 @@ function handleStandClick() {
   btnStand.disabled = true;
   if (winner === null) {
     btnHit.disabled = true;
+    dealerCard2Element.classList.remove("hidden")
     dealerCard2Text.classList.remove("hidden");
+    dealerCard2Icon.classList.remove("hidden");
     let d2Total = state.d;
     if (state.dealerCards[1].face === "A") {
       if (d2Total > 10) {
@@ -238,8 +259,14 @@ function handleStandClick() {
       dScoreEl.innerText = state.d;
       state.dealerCards.push(newDealerCard);
       let newDealerCardEl = document.createElement("div");
+      const newDealerCardTextSpan = document.createElement("span");
+      newDealerCardTextSpan.classList.add("card-text")
       newDealerCardEl.classList.add('dealer-extra-card', 'card');
-      newDealerCardEl.innerText = newDealerCard.face;
+      const dealerIconSpan = document.createElement("span");
+      addIconToSpan(dealerIconSpan, newDealerCard.suit, newDealerCardTextSpan)
+      newDealerCardTextSpan.innerText = newDealerCard.face;
+      newDealerCardEl.appendChild(newDealerCardTextSpan);
+      newDealerCardEl.appendChild(dealerIconSpan);
       let dealerDivEl = document.querySelector(".dealer-cards");
       dealerDivEl.appendChild(newDealerCardEl);
       if (state.d >= 17) {
@@ -280,7 +307,6 @@ function renderWinner() {
   }
 }
 
-
 function removeAllElementsOfClassName(className){
   document.querySelectorAll('.'+className).forEach(e => e.remove());
 }
@@ -298,7 +324,33 @@ function handleResetClick() {
   dealerCard2Text.textContent = "";
   playerCard1Text.textContent = "";
   playerCard2Text.textContent = "";
+  dealerCard1Text.classList.add("small-text")
+  playerCard1Text.classList.add("small-text")
+  playerCard2Text.classList.add("small-text")
+  dealerCard1Icon.innerHTML = "";
+  dealerCard2Icon.innerHTML = "";
+  playerCard1Icon.innerHTML = "";
+  playerCard2Icon.innerHTML = "";
+  playerCard2Element.classList.add("hidden")
+  dealerCard2Element.classList.add("hidden")
+
   removeAllElementsOfClassName('player-extra-cards');
   removeAllElementsOfClassName('dealer-extra-card');
+  const elementsOfClassDanger = document.querySelectorAll(".text-danger")
+  elementsOfClassDanger.forEach((element)=>{
+    element.classList.remove("text-danger")
+  })
+  winnerEl.classList.add("text-danger")
   init();
+}
+
+function addIconToSpan(spanElement, suit, textSpan){
+  const icon = document.createElement("i");
+  icon.classList.add("bi", "bi-suit-"+suit+"-fill")
+  if (suit === "diamond" || suit === "heart"){
+    icon.classList.add("text-danger")
+    textSpan.classList.add("text-danger")
+  }
+  spanElement.classList.add("text-center")
+  spanElement.appendChild(icon)
 }

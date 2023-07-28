@@ -1,5 +1,10 @@
 # Blackjack
-A front end browser based game to challenge me and enhance my skills with JS CSS HTML
+A front end browser based game to challenge me and enhance my skills with HTML CSS and JavaScript. The game is based on chance but has some strategy involved as well. The rule are as follows : <br>
+- Blackjack hands are scored by their point total.<br>
+ - The hand with the highest total wins as long as it doesn't exceed 21. <br>
+- A hand with a higher total than 21 is said to bust. 
+- Cards 2 through 10 are worth their face value, and face cards (jack, queen, king) are also worth 10. 
+- An ace's value is 11 unless this would cause the player to bust, in which case it is worth 1. 
 
 ## Gameplay - Wireframes
 
@@ -9,11 +14,9 @@ A front end browser based game to challenge me and enhance my skills with JS CSS
 
 ## Technologies Used
 
-
-
 - HTML
 - CSS
-- Bootstrap (CSS Framework) - [Documentation]()
+- Bootstrap (CSS Framework) - [Documentation](https://getbootstrap.com/docs/5.3/components/card/)
 - JavaScript
 
 ## Getting Started
@@ -22,17 +25,6 @@ Try out your luck with this game of chance - [Game Link](https://github.com/huma
 
 ## Future Features
 
-1. Including audios.
-<!-- A README.md file with these sections:
-
-☐ <Your game's title>: A description of your game. Background info of the game is a nice touch.
-
-☐ Screenshot(s): Images of your actual game.
-
-Note: if you edit your README.md on the github website editor, you can copy and paste image files directly to your markdown.
-
-☐ Technologies Used: List of the technologies used, e.g., JavaScript, HTML, CSS...
-
-☐ Getting Started: In this section include the link to your deployed game and any instructions you deem important.
-
-☐ Next Steps: Planned future enhancements (icebox items). -->
+1. Audios.
+2. Wagering.
+3. Multiple Players.

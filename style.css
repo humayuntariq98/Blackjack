@@ -16,7 +16,10 @@ nav{
   align-items: center;
 }
 nav>div:first-child{
-  margin-left: 48%;
+  margin-left: 2%;
+}
+#winnerText {
+  margin-left: 35%;
 }
 
 #top-Menu{
@@ -74,6 +77,7 @@ div.player-cards {
 div.d-score {
   grid-column: 3 / 4;
   grid-row: 1 / 2;
+  color: white;
 }
 
 button.stand {
@@ -84,8 +88,21 @@ button.stand {
 div.p-score {
   grid-column: 3 / 4;
   grid-row: 3 / 4;
+  color: white;
 }
 
 .hidden {
   display: none
+}
+.card {
+ width: 30px;
+ height: 80px;
+}
+.card-text {
+  font-size: 22px;
+  text-align: center;
+}
+
+.small-text {
+  font-size: 10px;
 }

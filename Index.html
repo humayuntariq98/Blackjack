@@ -12,24 +12,36 @@
 <body>
     <nav class="top">
         <div class="header">Blackjack</div>
-        <div class="winner" id="winnerText"></div>
+        <div class="winner display-5 text-lg text-danger" id="winnerText"></div>
         <div class="main-menu" id="top-Menu">Menu</div>
     </nav>
     <main class="container">
-        <button class="hit" id="hitBtn">Hit</button>
-        <button class="reset" id="resetBtn">Reset</button>
+        <button class="hit btn btn-danger" id="hitBtn">Hit</button>
+        <button class="reset btn btn-danger" id="resetBtn">Reset</button>
         <div class="dealer-cards">
-            <div class="dealer-card1 card"><span id="dealer-card1-Text"></span></div>
-            <div class="dealer-card2 card"><span id="dealer-card2-Text"></span></div> 
+            <div class="dealer-card1 card">
+                <span id="dealer-card1-Text" class="small-text"></span>
+                <span id="dealer-card1-icon"></span>
+            </div>
+            <div class="dealer-card2 card hidden">
+                <span id="dealer-card2-Text" class="small-text"></span>
+                <span id="dealer-card2-icon"></span>
+            </div> 
         </div>
-        <button class="deal" id="dealBtn">Deal</button>
+        <button class="deal btn btn-danger" id="dealBtn">Deal</button>
         <div class="player-cards">
-            <div class="player-card1 card"><span id="player-card1-Text"></span></div>
-            <div class="player-card2 card"><span id="player-card2-Text"></span></div> 
+            <div class="player-card1 card">
+                <span id="player-card1-Text" class="small-text"></span>
+                <span id="player-card1-icon"></span>
+            </div>
+            <div class="player-card2 card hidden">
+                <span id="player-card2-Text" class="small-text"></span>
+                <span id="player-card2-icon"></span>
+            </div> 
         </div>
-        <div class="d-score">D-score = </div>
-        <button class="stand" id="standBtn">Stand</button>
-        <div class="p-score">P-score = </div>
+        <div class="d-score display-5">D-score = </div>
+        <button class="stand btn btn-danger" id="standBtn">Stand</button>
+        <div class="p-score display-5">P-score = </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
