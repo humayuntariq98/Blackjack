@@ -187,7 +187,7 @@ function handleHitClick() {
   } else {
     let newPlyerCard = randomCardGenerate();
     const newPlayerDiv = document.createElement("div");
-    newPlayerDiv.classList.add('player-extra-cards');
+    newPlayerDiv.classList.add("player-extra-cards","card");
     const newSpan = document.createElement("span");
     newSpan.textContent = newPlyerCard.face;
     newPlayerDiv.appendChild(newSpan);
@@ -238,7 +238,7 @@ function handleStandClick() {
       dScoreEl.innerText = state.d;
       state.dealerCards.push(newDealerCard);
       let newDealerCardEl = document.createElement("div");
-      newDealerCardEl.classList.add('dealer-extra-card');
+      newDealerCardEl.classList.add('dealer-extra-card', 'card');
       newDealerCardEl.innerText = newDealerCard.face;
       let dealerDivEl = document.querySelector(".dealer-cards");
       dealerDivEl.appendChild(newDealerCardEl);
@@ -291,8 +291,8 @@ function handleResetClick() {
   });
   usedCards = [];
   btnDeal.disabled = false;
-  btnHit.disabled = false;
-  btnStand.disabled = false;
+  btnHit.disabled = true;
+  btnStand.disabled = true;
   winnerEl.innerText = "";
   dealerCard1Text.textContent = "";
   dealerCard2Text.textContent = "";
