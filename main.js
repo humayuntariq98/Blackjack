@@ -1,3 +1,5 @@
+//GLOBAL STATE
+
 const INIT_STATE = {
   p: 0,
   d: 0,
@@ -23,6 +25,7 @@ let faces = [
   { face: "Q", value: 10 },
   { face: "K", value: 10 },
 ];
+//Creating a deck
 
 const deck = [];
 suits.forEach((element) => {
@@ -32,7 +35,6 @@ suits.forEach((element) => {
     deck.push(tempCard);
   });
 });
-console.log(deck);
 
 let state;
 
@@ -43,6 +45,7 @@ let numberGenerator;
 let usedCards = [];
 
 // CACHED ELEMENTS
+
 const btnHit = document.getElementById("hitBtn");
 btnHit.disabled = true;
 const btnDeal = document.getElementById("dealBtn");
@@ -57,22 +60,21 @@ const dealerCard1Text = document.getElementById("dealer-card1-Text");
 const dealerCard2Text = document.getElementById("dealer-card2-Text");
 const playerCard1Text = document.getElementById("player-card1-Text");
 const playerCard2Text = document.getElementById("player-card2-Text");
-const dealerCard2Element = document.querySelector(".dealer-card2")
-const playerCard2Element = document.querySelector(".player-card2")
+const dealerCard2Element = document.querySelector(".dealer-card2");
+const playerCard2Element = document.querySelector(".player-card2");
 
 const pScoreEl = document.querySelector(".p-score");
 const dScoreEl = document.querySelector(".d-score");
 const winnerEl = document.getElementById("winnerText");
 
-
-const dealerCard1Icon = document.getElementById("dealer-card1-icon")
-const dealerCard2Icon = document.getElementById("dealer-card2-icon")
-const playerCard1Icon = document.getElementById("player-card1-icon")
-const playerCard2Icon = document.getElementById("player-card2-icon")
+const dealerCard1Icon = document.getElementById("dealer-card1-icon");
+const dealerCard2Icon = document.getElementById("dealer-card2-icon");
+const playerCard1Icon = document.getElementById("player-card1-icon");
+const playerCard2Icon = document.getElementById("player-card2-icon");
 
 console.log(btnDeal);
 
-//EVENT LISTENERS
+//EVENT LISTENERS, HIT, DEAL, STAND, RESET
 
 btnHit.addEventListener("click", handleHitClick);
 btnDeal.addEventListener("click", handleDealClick);
@@ -83,12 +85,13 @@ resetBtn.addEventListener("click", handleResetClick);
 
 init();
 function init() {
-  console.log('initstate', INIT_STATE)
+  console.log("initstate", INIT_STATE);
   state = JSON.parse(JSON.stringify(INIT_STATE));
   winner = null;
   numberGenerator = 52;
   render();
 }
+//TO CALCULATE DEALERS SCORE
 
 function calculateDealerScore() {
   let dTotal = state.d;
@@ -100,6 +103,7 @@ function calculateDealerScore() {
   render();
   determineWinner();
 }
+//TO CALCULATE PLAYER'S SCORE
 
 function calculatePlayerScore() {
   let pTotal = state.p;
@@ -117,6 +121,7 @@ function calculatePlayerScore() {
   render();
   determineWinner();
 }
+//WINNING LOGIC
 
 function determineWinner() {
   if (state.p === 21 && state.d === 21) {
@@ -134,36 +139,41 @@ function determineWinner() {
   }
   renderWinner();
 }
+//RENDERING STATE TO THE SCREEN
 
 function render() {
   //render dealer cards on the screen
+
   if (state.dealerCards.length > 0) {
     dealerCard1Text.innerText = `${state.dealerCards[0].face}`;
-    dealerCard1Text.classList.add("card-text")
-    dealerCard1Text.classList.remove("small-text")
+    dealerCard1Text.classList.add("card-text");
+    dealerCard1Text.classList.remove("small-text");
     dealerCard2Text.innerText = `${state.dealerCards[1].face}`;
-    dealerCard2Text.classList.add("card-text")
-    dealerCard2Text.classList.remove("small-text")
+    dealerCard2Text.classList.add("card-text");
+    dealerCard2Text.classList.remove("small-text");
     dealerCard2Text.classList.add("hidden");
   } else {
     dealerCard1Text.innerText = "Click Deal to begin";
   }
 
   // Render player cards
+
   if (state.playerCards.length > 0) {
     playerCard1Text.innerText = `${state.playerCards[0].face}`;
-    playerCard1Text.classList.add("card-text")
-    playerCard1Text.classList.remove("small-text")
+    playerCard1Text.classList.add("card-text");
+    playerCard1Text.classList.remove("small-text");
     playerCard2Text.innerText = `${state.playerCards[1].face}`;
-    playerCard2Text.classList.add("card-text")
-    playerCard2Text.classList.remove("small-text")
+    playerCard2Text.classList.add("card-text");
+    playerCard2Text.classList.remove("small-text");
   } else {
     playerCard1Text.innerText = "Click Deal to begin";
   }
   //rendering dealer and player scores on the screen
+
   dScoreEl.innerText = state.d;
   pScoreEl.innerText = state.p;
 }
+//GENERATING RANDOM CARD FROM THE DECK
 
 function randomCardGenerate() {
   let output;
@@ -173,9 +183,13 @@ function randomCardGenerate() {
   numberGenerator = numberGenerator - 1;
   return output;
 }
+// DEAL CLICK HANDLER
 
 function handleDealClick(event) {
   btnDeal.disabled = true;
+
+  //generating card for player and dealer
+
   let playerCard1 = randomCardGenerate();
   let playerCard2 = randomCardGenerate();
   let dealerCard1 = randomCardGenerate();
@@ -189,24 +203,33 @@ function handleDealClick(event) {
   calculateDealerScore();
   calculatePlayerScore();
   render();
-  addIconToSpan(dealerCard1Icon, state.dealerCards[0].suit, dealerCard1Text)
-  addIconToSpan(dealerCard2Icon, state.dealerCards[1].suit, dealerCard2Text)
-  playerCard2Element.classList.remove("hidden")
+
+  //Adding span to show icon of the cards
+
+  addIconToSpan(dealerCard1Icon, state.dealerCards[0].suit, dealerCard1Text);
+  addIconToSpan(dealerCard2Icon, state.dealerCards[1].suit, dealerCard2Text);
+  playerCard2Element.classList.remove("hidden");
   addIconToSpan(playerCard1Icon, state.playerCards[0].suit, playerCard1Text);
   addIconToSpan(playerCard2Icon, state.playerCards[1].suit, playerCard2Text);
 }
+//HIT CLICK HANDLER
 
 function handleHitClick() {
   if (state.p >= 21) {
     btnHit.disabled = true;
   } else {
+    //Generating a new card for the player if the score is not already >=21
+
     let newPlyerCard = randomCardGenerate();
     const newPlayerDiv = document.createElement("div");
-    newPlayerDiv.classList.add("player-extra-cards","card");
+    newPlayerDiv.classList.add("player-extra-cards", "card");
     const newSpan = document.createElement("span");
-    newSpan.classList.add("card-text")
+    newSpan.classList.add("card-text");
+
+    //Creating span element to show icon of created card
+
     const iconSpan = document.createElement("span");
-    addIconToSpan(iconSpan, newPlyerCard.suit, newSpan)
+    addIconToSpan(iconSpan, newPlyerCard.suit, newSpan);
     newSpan.textContent = newPlyerCard.face;
     newPlayerDiv.appendChild(newSpan);
     newPlayerDiv.appendChild(iconSpan);
@@ -222,17 +245,23 @@ function handleHitClick() {
       }
     }
     state.p += newPlyerCard.value;
+
     //rendering player score on the screen after hit
+
     pScoreEl.innerText = state.p;
     determineWinner();
   }
 }
+//STAND CLICK HANDLER
 
 function handleStandClick() {
   btnStand.disabled = true;
   if (winner === null) {
     btnHit.disabled = true;
-    dealerCard2Element.classList.remove("hidden")
+
+    //Show second card of dealer along with icon and render dealer score after second card on the screen
+
+    dealerCard2Element.classList.remove("hidden");
     dealerCard2Text.classList.remove("hidden");
     dealerCard2Icon.classList.remove("hidden");
     let d2Total = state.d;
@@ -246,6 +275,9 @@ function handleStandClick() {
     d2Total = d2Total + state.dealerCards[1].value;
     state.d = d2Total;
     dScoreEl.innerText = state.d;
+
+    //Generating another card for the dealer till the score is <=16
+
     while (state.d <= 16) {
       let newDealerCard = randomCardGenerate();
       if (newDealerCard.face === "A") {
@@ -258,12 +290,15 @@ function handleStandClick() {
       state.d = state.d + newDealerCard.value;
       dScoreEl.innerText = state.d;
       state.dealerCards.push(newDealerCard);
+
+      //Creating new element for the new card and icon and appending it to dealer div
+
       let newDealerCardEl = document.createElement("div");
       const newDealerCardTextSpan = document.createElement("span");
-      newDealerCardTextSpan.classList.add("card-text")
-      newDealerCardEl.classList.add('dealer-extra-card', 'card');
+      newDealerCardTextSpan.classList.add("card-text");
+      newDealerCardEl.classList.add("dealer-extra-card", "card");
       const dealerIconSpan = document.createElement("span");
-      addIconToSpan(dealerIconSpan, newDealerCard.suit, newDealerCardTextSpan)
+      addIconToSpan(dealerIconSpan, newDealerCard.suit, newDealerCardTextSpan);
       newDealerCardTextSpan.innerText = newDealerCard.face;
       newDealerCardEl.appendChild(newDealerCardTextSpan);
       newDealerCardEl.appendChild(dealerIconSpan);
@@ -273,6 +308,8 @@ function handleStandClick() {
         break;
       }
     }
+    //Check win logic once stand is clicked
+
     if (state.p === 21 && state.d === 21) {
       console.log("push");
       winner = "Push. It's a tie";
@@ -298,6 +335,7 @@ function handleStandClick() {
   }
   renderWinner();
 }
+//RENDERING WINNER TO THE SCREEN
 
 function renderWinner() {
   winnerEl.innerText = winner;
@@ -306,12 +344,19 @@ function renderWinner() {
     btnStand.disabled = true;
   }
 }
+//FUNCTION TO REMOVE ALL CARDS THAT WERE ADDED THROUGH HIT OR STAND FROM THE SCREEN.
 
-function removeAllElementsOfClassName(className){
-  document.querySelectorAll('.'+className).forEach(e => e.remove());
+function removeAllElementsOfClassName(className) {
+  document.querySelectorAll("." + className).forEach((e) => e.remove());
 }
+
+//RESET CLICK HANDLER
+
 function handleResetClick() {
   resetBtn.disabled = true;
+
+  //Getting the deck back to 52, and emptying the used cards array.
+
   usedCards.forEach((usedCard) => {
     deck.push(usedCard);
   });
@@ -319,38 +364,45 @@ function handleResetClick() {
   btnDeal.disabled = false;
   btnHit.disabled = true;
   btnStand.disabled = true;
+
+  //Clearing out all divs along with icons
+
   winnerEl.innerText = "";
   dealerCard1Text.textContent = "";
   dealerCard2Text.textContent = "";
   playerCard1Text.textContent = "";
   playerCard2Text.textContent = "";
-  dealerCard1Text.classList.add("small-text")
-  playerCard1Text.classList.add("small-text")
-  playerCard2Text.classList.add("small-text")
+  dealerCard1Text.classList.add("small-text");
+  playerCard1Text.classList.add("small-text");
+  playerCard2Text.classList.add("small-text");
   dealerCard1Icon.innerHTML = "";
   dealerCard2Icon.innerHTML = "";
   playerCard1Icon.innerHTML = "";
   playerCard2Icon.innerHTML = "";
-  playerCard2Element.classList.add("hidden")
-  dealerCard2Element.classList.add("hidden")
+  playerCard2Element.classList.add("hidden");
+  dealerCard2Element.classList.add("hidden");
 
-  removeAllElementsOfClassName('player-extra-cards');
-  removeAllElementsOfClassName('dealer-extra-card');
-  const elementsOfClassDanger = document.querySelectorAll(".text-danger")
-  elementsOfClassDanger.forEach((element)=>{
-    element.classList.remove("text-danger")
-  })
-  winnerEl.classList.add("text-danger")
+  //invoking function to remove all cards added through hit or stand
+
+  removeAllElementsOfClassName("player-extra-cards");
+  removeAllElementsOfClassName("dealer-extra-card");
+  const elementsOfClassDanger = document.querySelectorAll(".text-danger");
+  elementsOfClassDanger.forEach((element) => {
+    element.classList.remove("text-danger");
+  });
+  winnerEl.classList.add("text-danger");
   init();
 }
 
-function addIconToSpan(spanElement, suit, textSpan){
+//FUNCTION TO ADD ICON TO THE CARDS IN THE SPANS
+
+function addIconToSpan(spanElement, suit, textSpan) {
   const icon = document.createElement("i");
-  icon.classList.add("bi", "bi-suit-"+suit+"-fill")
-  if (suit === "diamond" || suit === "heart"){
-    icon.classList.add("text-danger")
-    textSpan.classList.add("text-danger")
+  icon.classList.add("bi", "bi-suit-" + suit + "-fill");
+  if (suit === "diamond" || suit === "heart") {
+    icon.classList.add("text-danger");
+    textSpan.classList.add("text-danger");
   }
-  spanElement.classList.add("text-center")
-  spanElement.appendChild(icon)
+  spanElement.classList.add("text-center");
+  spanElement.appendChild(icon);
 }

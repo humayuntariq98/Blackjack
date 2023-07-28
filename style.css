@@ -17,13 +17,17 @@ nav{
 }
 nav>div:first-child{
   margin-left: 2%;
+  font-weight: 700;
+  font-size: 2rem;
 }
 #winnerText {
-  margin-left: 35%;
+  font-weight: 650;
 }
 
 #top-Menu{
-  margin-left: auto
+  margin-right: 2%;
+  font-weight: 650;
+  font-size: 2rem;
 }
 main.container {
   display: grid;
@@ -44,8 +48,8 @@ align-items: center;
 
 div.dealer-card,
 div.player-card {
-width: 60px; /* Adjust the width as needed */
-height: 80px; /* Adjust the height as needed */
+width: 60px;
+height: 80px;
 border: 1px solid black;
 margin: 5px;
 display: flex;
