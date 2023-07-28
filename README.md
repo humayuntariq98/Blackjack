@@ -9,7 +9,7 @@ A front end browser based game to challenge me and enhance my skills with HTML C
 ## Gameplay - Screenshots and Description
 
 ### Game Start
-![Start Screen](<game start.png>)
+![Start Screen](<Game Start.png>)
 When the game begins and the player clicks on deal, 2 cards are distributed each to the player and the dealer. However, the dealer only has one card face up.
 The player can choose to Hit, but if the combined score of cards exceeds 21, the dealer wins.
 If the player chooses to stand, the dealer shows the second card.
