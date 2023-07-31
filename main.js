@@ -406,5 +406,3 @@ function addIconToSpan(spanElement, suit, textSpan) {
   spanElement.classList.add("text-center");
   spanElement.appendChild(icon);
 }
-
-//
