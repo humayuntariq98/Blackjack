@@ -30,7 +30,7 @@ However, if the dealers score exceeds 21, the player wins. Moreover, if the play
 
 ## Getting Started
 
-Try out your luck with this game of chance - [Game Link]([https://github.com/humayuntariq98/Blackjack](https://blackjackinjs.netlify.app/))
+Try out your luck with this game of chance - [Game Link](https://blackjackinjs.netlify.app/)
 
 ## Future Features
 
